@@ -54,7 +54,7 @@ class PibSqlite3Fixture : public PibDataFixture
 public:
   PibSqlite3Fixture()
     : tmpPath(boost::filesystem::path(UNIT_TEST_CONFIG_PATH) / "DbTest")
-    , pib(tmpPath.c_str())
+    , pib((char*)(tmpPath.c_str()))
   {
   }
 

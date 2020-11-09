@@ -19,6 +19,8 @@
  * See AUTHORS.md for complete list of ndn-cxx authors and contributors.
  */
 
+#ifndef __MINGW32__
+
 #include "ndn-cxx/transport/unix-transport.hpp"
 
 #include "tests/boost-test.hpp"
@@ -57,3 +59,5 @@ BOOST_AUTO_TEST_SUITE_END() // Transport
 
 } // namespace tests
 } // namespace ndn
+
+#endif

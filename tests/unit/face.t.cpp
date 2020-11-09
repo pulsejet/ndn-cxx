@@ -22,7 +22,11 @@
 #include "ndn-cxx/face.hpp"
 #include "ndn-cxx/lp/tags.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
+
+#ifndef __MINGW32__
 #include "ndn-cxx/transport/unix-transport.hpp"
+#endif
+
 #include "ndn-cxx/util/dummy-client-face.hpp"
 #include "ndn-cxx/util/scheduler.hpp"
 
@@ -920,6 +924,7 @@ class WithEnvAndConfig : public WithEnv, public WithConfig
 
 typedef boost::mpl::vector<WithEnv, WithConfig> ConfigOptions;
 
+#ifndef __MINGW32__
 BOOST_FIXTURE_TEST_CASE(NoConfig, WithEnvAndConfig) // fixture configures test HOME and PIB/TPM path
 {
   shared_ptr<Face> face;
@@ -979,6 +984,7 @@ BOOST_FIXTURE_TEST_CASE(ExplicitTransport, WithEnvAndConfig)
   BOOST_REQUIRE_NO_THROW(face = make_shared<Face>(transport));
   BOOST_CHECK(dynamic_pointer_cast<UnixTransport>(face->getTransport()) != nullptr);
 }
+#endif
 
 BOOST_AUTO_TEST_SUITE_END() // Transport
 

@@ -31,6 +31,11 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 
+#ifdef __MINGW32__
+#define setenv(A, B, C) _putenv_s(A, B)
+#define unsetenv(A) _putenv_s(A, "")
+#endif
+
 namespace ndn {
 namespace tests {
 

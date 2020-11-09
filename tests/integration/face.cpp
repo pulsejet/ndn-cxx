@@ -24,7 +24,11 @@
 
 #include "ndn-cxx/face.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
+
+#ifndef __MINGW32__
 #include "ndn-cxx/transport/unix-transport.hpp"
+#endif
+
 #include "ndn-cxx/util/scheduler.hpp"
 
 #include "tests/identity-management-fixture.hpp"
@@ -117,7 +121,11 @@ protected:
   Scheduler sched;
 };
 
+#ifndef __MINGW32__
 using Transports = boost::mpl::vector<UnixTransport, TcpTransport>;
+#else
+using Transports = boost::mpl::vector<TcpTransport>;
+#endif
 
 BOOST_AUTO_TEST_SUITE(Consumer)
 
@@ -327,7 +335,11 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE(OversizedData, TransportType, Transports, FaceF
 
 BOOST_AUTO_TEST_SUITE_END() // Producer
 
+#ifndef __MINGW32__
 BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<UnixTransport>)
+#else
+BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<TcpTransport>)
+#endif
 
 BOOST_AUTO_TEST_CASE(ShutdownWhileSendInProgress) // Bug #3136
 {
