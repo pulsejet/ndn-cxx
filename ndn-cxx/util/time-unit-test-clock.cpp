@@ -25,6 +25,27 @@
 #include <chrono>
 #include <thread>
 
+#ifdef __MINGW32__
+#include <windows.h>
+
+bool win_sleep(){
+	HANDLE timer;
+	LARGE_INTEGER li;
+	if(!(timer = CreateWaitableTimer(NULL, true, NULL)))
+		return false;
+
+	li.QuadPart = -1000;
+	if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, false)){
+		CloseHandle(timer);
+		return false;
+	}
+
+	WaitForSingleObject(timer, INFINITE);
+	CloseHandle(timer);
+	return true;
+}
+#endif
+
 namespace ndn {
 namespace time {
 
@@ -74,6 +95,10 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
   std::this_thread::sleep_for(std::chrono::nanoseconds(duration_cast<nanoseconds>(
                                 boost::asio::wait_traits<steady_clock>::to_wait_duration(duration) +
                                 typename BaseClock::duration(1)).count()));
+
+#ifdef __MINGW32__
+  win_sleep();
+#endif
 }
 
 template<class BaseClock, class ClockTraits>
@@ -89,6 +114,10 @@ UnitTestClock<BaseClock, ClockTraits>::setNow(nanoseconds timeSinceEpoch)
   std::this_thread::sleep_for(std::chrono::nanoseconds(duration_cast<nanoseconds>(
                                 boost::asio::wait_traits<steady_clock>::to_wait_duration(delta) +
                                 typename BaseClock::duration(1)).count()));
+
+#ifdef __MINGW32__
+  win_sleep();
+#endif
 }
 
 template

@@ -21,3 +21,19 @@
 
 #define BOOST_TEST_MODULE ndn-cxx
 #include "tests/boost-test.hpp"
+
+#ifdef __MINGW32__
+#include <windows.h>
+
+// Speed up tests by reducing the mininum sleep time to 1ms
+struct InitializeFixture {
+  InitializeFixture()   {
+      timeBeginPeriod(1);
+  }
+  ~InitializeFixture()  {
+      timeEndPeriod(1);
+  }
+};
+
+BOOST_TEST_GLOBAL_FIXTURE(InitializeFixture);
+#endif
