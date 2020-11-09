@@ -189,7 +189,7 @@ public:
   using duration   = boost::chrono::system_clock::duration;
   using rep        = duration::rep;
   using period     = duration::period;
-  using time_point = boost::chrono::time_point<system_clock>;
+  using time_point = boost::chrono::time_point<system_clock, time::nanoseconds>;
   static constexpr bool is_steady = boost::chrono::system_clock::is_steady;
 
   typedef time_point TimePoint;

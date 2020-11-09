@@ -114,7 +114,11 @@ Face::makeDefaultTransport()
 
   if (transportUri.empty()) {
     // transport not specified, use default Unix transport.
+#ifndef __MINGW32__
     return UnixTransport::create("");
+#else
+    NDN_THROW_NESTED(ConfigFile::Error("Failed to create transport without URI - no unix socket support"));
+#endif
   }
 
   std::string protocol;
@@ -123,7 +127,11 @@ Face::makeDefaultTransport()
     protocol = uri.getScheme();
 
     if (protocol == "unix") {
+#ifndef __MINGW32__
       return UnixTransport::create(transportUri);
+#else
+      NDN_THROW(ConfigFile::Error("Failed to create transport - no unix socket support"));
+#endif
     }
     else if (protocol == "tcp" || protocol == "tcp4" || protocol == "tcp6") {
       return TcpTransport::create(transportUri);

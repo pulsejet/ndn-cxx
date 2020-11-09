@@ -32,6 +32,9 @@
 #include "ndn-cxx/security/validator.hpp"
 #include "ndn-cxx/util/segment-fetcher.hpp"
 
+#undef ERROR
+#undef ERROR_TIMEOUT
+
 namespace ndn {
 
 class Face;

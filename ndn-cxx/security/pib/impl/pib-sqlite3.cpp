@@ -211,7 +211,7 @@ PibSqlite3::PibSqlite3(const std::string& location)
   boost::filesystem::create_directories(dbDir);
 
   // Open PIB
-  int result = sqlite3_open_v2((dbDir / "pib.db").c_str(), &m_database,
+  int result = sqlite3_open_v2((char *)((dbDir / "pib.db").c_str()), &m_database,
                                SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE,
 #ifdef NDN_CXX_DISABLE_SQLITE3_FS_LOCKING
                                "unix-dotfile"

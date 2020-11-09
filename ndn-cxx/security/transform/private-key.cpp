@@ -35,6 +35,9 @@
 #include <boost/lexical_cast.hpp>
 #include <cstring>
 
+#undef ERROR
+#undef ERROR_TIMEOUT
+
 #define ENSURE_PRIVATE_KEY_LOADED(key) \
   do { \
     if ((key) == nullptr) \

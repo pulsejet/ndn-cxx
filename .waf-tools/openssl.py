@@ -23,7 +23,7 @@ from waflib import Utils
 from waflib.Configure import conf
 
 OPENSSL_DIR_OSX = ['/usr/local', '/opt/local', '/usr/local/opt/openssl']
-OPENSSL_DIR = ['/usr', '/usr/local', '/opt/local', '/sw']
+OPENSSL_DIR = ['/usr', '/usr/local', '/opt/local', '/sw', '/mingw64']
 
 def options(opt):
     opt.add_option('--with-openssl', type='string', default=None, dest='openssl_dir',

@@ -24,6 +24,8 @@
 
 #include "ndn-cxx/detail/common.hpp"
 
+#undef NO_ERROR
+
 namespace ndn {
 namespace security {
 inline namespace v2 {

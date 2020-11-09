@@ -34,6 +34,8 @@
 
 #include <atomic>
 
+#undef ERROR
+
 namespace ndn {
 namespace util {
 

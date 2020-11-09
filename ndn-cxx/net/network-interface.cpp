@@ -26,7 +26,9 @@
 #include "ndn-cxx/util/logger.hpp"
 #include "ndn-cxx/util/string-helper.hpp"
 
+#ifndef __MINGW32__
 #include <net/if.h>
+#endif
 
 NDN_LOG_INIT(ndn.NetworkMonitor);
 
@@ -176,16 +178,29 @@ operator<<(std::ostream& os, const NetworkInterface& netif)
 #define PRINT_IFF(flag) printFlag(os, flags, IFF_##flag, #flag)
   PRINT_IFF(UP);
   PRINT_IFF(BROADCAST);
+#ifndef __MINGW32__
   PRINT_IFF(DEBUG);
+#endif
+
   PRINT_IFF(LOOPBACK);
+
+#ifndef __MINGW32__
   PRINT_IFF(POINTOPOINT);
+#else
+  PRINT_IFF(POINTTOPOINT);
+#endif
+
 #if defined(IFF_NOTRAILERS)
   PRINT_IFF(NOTRAILERS);
 #endif
+
+#ifndef __MINGW32__
   PRINT_IFF(RUNNING);
   PRINT_IFF(NOARP);
   PRINT_IFF(PROMISC);
   PRINT_IFF(ALLMULTI);
+#endif
+
   PRINT_IFF(MULTICAST);
 #if defined(__linux__)
   PRINT_IFF(MASTER);

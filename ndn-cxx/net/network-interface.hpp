@@ -171,7 +171,11 @@ public: // getters
   bool
   isPointToPoint() const
   {
+#ifndef __MINGW32__
     return (m_flags & IFF_POINTOPOINT) != 0;
+#else
+    return (m_flags & IFF_POINTTOPOINT) != 0;
+#endif
   }
 
   /** @brief Returns true if the interface supports broadcast communication

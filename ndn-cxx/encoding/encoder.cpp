@@ -23,6 +23,9 @@
 
 #include <boost/endian/conversion.hpp>
 
+#undef ERROR
+#undef ERROR_TIMEOUT
+
 namespace ndn {
 namespace encoding {
 

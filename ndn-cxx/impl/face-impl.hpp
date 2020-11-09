@@ -32,7 +32,11 @@
 #include "ndn-cxx/mgmt/nfd/command-options.hpp"
 #include "ndn-cxx/mgmt/nfd/controller.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
+
+#ifndef __MINGW32__
 #include "ndn-cxx/transport/unix-transport.hpp"
+#endif
+
 #include "ndn-cxx/util/config-file.hpp"
 #include "ndn-cxx/util/logger.hpp"
 #include "ndn-cxx/util/scheduler.hpp"

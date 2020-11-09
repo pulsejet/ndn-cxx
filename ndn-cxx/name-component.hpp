@@ -27,6 +27,8 @@
 #include "ndn-cxx/encoding/block-helpers.hpp"
 #include "ndn-cxx/util/time.hpp"
 
+#undef ALTERNATE
+
 namespace ndn {
 namespace name {
 
