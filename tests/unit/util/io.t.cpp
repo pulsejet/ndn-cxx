@@ -298,7 +298,11 @@ BOOST_AUTO_TEST_CASE(SaveBase64)
   EncodableType encoded;
   BOOST_CHECK_NO_THROW(io::save(encoded, filename, io::BASE64));
   auto content = this->readFile<std::string>();
+#ifdef __MINGW32__
+  BOOST_CHECK_EQUAL(content, "qgHd\r\n");
+#else
   BOOST_CHECK_EQUAL(content, "qgHd\n"); // printf '\xAA\x01\xDD' | base64
+#endif
 }
 
 BOOST_AUTO_TEST_CASE(SaveHex)

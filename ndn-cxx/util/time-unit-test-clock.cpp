@@ -34,7 +34,7 @@ bool win_sleep(){
   if(!(timer = CreateWaitableTimer(NULL, true, NULL)))
     return false;
 
-  li.QuadPart = -1000;
+  li.QuadPart = -10000;
   if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, false)){
     CloseHandle(timer);
     return false;

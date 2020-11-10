@@ -117,7 +117,7 @@ Face::makeDefaultTransport()
 #ifndef __MINGW32__
     return UnixTransport::create("");
 #else
-    NDN_THROW_NESTED(ConfigFile::Error("Failed to create transport without URI - no unix socket support"));
+    NDN_THROW(ConfigFile::Error("Failed to create transport without URI - no unix socket support"));
 #endif
   }
 
