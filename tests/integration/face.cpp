@@ -58,12 +58,21 @@ executeCommand(const std::string& cmd)
 {
   std::string output;
   char buf[256];
-  FILE* pipe = popen(cmd.data(), "r");
+  FILE* pipe =
+#ifdef _MSC_VER
+    _popen(cmd.data(), "r");
+#else
+    popen(cmd.data(), "r");
+#endif
   BOOST_REQUIRE_MESSAGE(pipe != nullptr, "popen(" << cmd << ")");
   while (fgets(buf, sizeof(buf), pipe) != nullptr) {
     output += buf;
   }
+#ifdef _MSC_VER
+  _pclose(pipe);
+#else
   pclose(pipe);
+#endif
   return output;
 }
 

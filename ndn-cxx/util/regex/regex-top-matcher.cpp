@@ -135,7 +135,7 @@ RegexTopMatcher::getItemFromExpand(const std::string& expand, size_t& offset)
     if (offset >= expand.size())
       NDN_THROW(Error("Wrong format of expand string"));
 
-    while (expand[offset] <= '9' and expand[offset] >= '0') {
+    while (expand[offset] <= '9' && expand[offset] >= '0') {
       offset++;
       if (offset > expand.size())
         NDN_THROW(Error("Wrong format of expand string"));

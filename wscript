@@ -80,7 +80,7 @@ def configure(conf):
     conf.env.WITH_TOOLS = conf.options.with_tools
     conf.env.WITH_EXAMPLES = conf.options.with_examples
 
-    conf.find_program('sh', var='SH')
+    conf.find_program('sh', var='SH', mandatory=False)
 
     conf.check_cxx(lib='atomic', uselib_store='ATOMIC', define_name='HAVE_ATOMIC', mandatory=False)
     conf.check_cxx(lib='pthread', uselib_store='PTHREAD', define_name='HAVE_PTHREAD', mandatory=False)
@@ -103,7 +103,9 @@ def configure(conf):
 
     conf.check_osx_frameworks()
     conf.check_sqlite3()
-    conf.check_openssl(lib='crypto', atleast_version=0x1000200f) # 1.0.2
+
+    crypto_lib = 'crypto' if conf.env.CXX_NAME != 'msvc' else 'libcrypto'
+    conf.check_openssl(lib=crypto_lib, atleast_version=0x1000200f) # 1.0.2
 
     boost_libs = ['system', 'program_options', 'chrono', 'date_time', 'filesystem', 'thread', 'log']
 
@@ -155,7 +157,7 @@ def configure(conf):
     conf.define_cond('HAVE_TESTS', conf.env.WITH_TESTS)
     conf.define_cond('WITH_OSX_KEYCHAIN', conf.env.HAVE_OSX_FRAMEWORKS and conf.options.with_osx_keychain)
     conf.define_cond('DISABLE_SQLITE3_FS_LOCKING', not conf.options.with_sqlite_locking)
-    conf.define('SYSCONFDIR', conf.env.SYSCONFDIR)
+    conf.define('SYSCONFDIR', conf.env.SYSCONFDIR.replace('\\', '\\\\'))
     # The config header will contain all defines that were added using conf.define()
     # or conf.define_cond().  Everything that was added directly to conf.env.DEFINES
     # will not appear in the config header, but will instead be passed directly to the

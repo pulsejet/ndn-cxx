@@ -31,6 +31,8 @@
 #include <boost/test/output_test_stream.hpp>
 #endif
 
+#undef ERROR
+
 namespace ndn {
 namespace util {
 namespace tests {

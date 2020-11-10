@@ -148,6 +148,12 @@ using ArgumentType = typename ExtractArgument<T>::type;
   }
 /** \endcond */
 
+#ifndef _MSC_VER
+#define ATTRIB_USED __attribute__((used))
+#else
+#define ATTRIB_USED
+#endif
+
 /** \brief Define a non-member log module.
  *
  *  This macro can be used in global scope to define a log module for an entire translation
@@ -164,7 +170,7 @@ using ArgumentType = typename ExtractArgument<T>::type;
  */
 #define NDN_LOG_INIT(name) \
   namespace { \
-    const bool ndn_cxx_loggerRegistration __attribute__((used)) = NDN_LOG_REGISTER_NAME(name); \
+    const bool ndn_cxx_loggerRegistration ATTRIB_USED = NDN_LOG_REGISTER_NAME(name); \
     ::ndn::util::Logger& ndn_cxx_getLogger() \
     NDN_LOG_INIT_FUNCTION_BODY(name) \
   } \

@@ -312,6 +312,9 @@ def boost_get_libs(self, *k, **kw):
 							'boost_%s%s%s%s$' % (lib, toolset_pat, tags, ext),
 							'boost_%s%s%s$' % (lib, tags, ext),
 							'boost_%s%s$' % (lib, ext),
+							'boost_%s%s%s' % (lib, tags, version),
+							'boost_%s%s%s' % (lib, toolset_pat, tags),
+							'boost_%s%s' % (lib, tags),
 							'boost_%s' % lib]:
 				self.to_log('Trying pattern %s' % pattern)
 				file = find_lib(re.compile(pattern), files)

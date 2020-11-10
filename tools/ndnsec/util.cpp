@@ -24,7 +24,11 @@
 #include "ndn-cxx/security/impl/openssl.hpp"
 #include "ndn-cxx/util/io.hpp"
 
+#ifdef _MSC_VER
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
 
 namespace ndn {
 namespace ndnsec {

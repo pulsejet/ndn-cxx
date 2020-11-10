@@ -31,6 +31,8 @@ def configure(conf):
             errmsg = ('The version of clang you are using is too old.\n'
                       'The minimum supported clang version is 4.0.')
         conf.flags = ClangFlags()
+    elif cxx == 'msvc':
+        conf.flags = MsvcFlags()
     else:
         warnmsg = '%s compiler is unsupported' % cxx
         conf.flags = CompilerFlags()
@@ -47,9 +49,10 @@ def configure(conf):
     conf.areCustomCxxflagsPresent = (len(conf.env.CXXFLAGS) > 0)
 
     # General flags are always applied (e.g., selecting C++ language standard)
+    is_msvc = (cxx == 'msvc')
     generalFlags = conf.flags.getGeneralFlags(conf)
-    conf.add_supported_cxxflags(generalFlags['CXXFLAGS'])
-    conf.add_supported_linkflags(generalFlags['LINKFLAGS'])
+    conf.add_supported_cxxflags(generalFlags['CXXFLAGS'], msvc=is_msvc)
+    conf.add_supported_linkflags(generalFlags['LINKFLAGS'], msvc=is_msvc)
     conf.env.DEFINES += generalFlags['DEFINES']
 
 @Configure.conf
@@ -75,7 +78,7 @@ def check_compiler_flags(conf):
     conf.env.DEFINES += extraFlags['DEFINES']
 
 @Configure.conf
-def add_supported_cxxflags(self, cxxflags):
+def add_supported_cxxflags(self, cxxflags, msvc=False):
     """
     Check which cxxflags are supported by compiler and add them to env.CXXFLAGS variable
     """
@@ -87,14 +90,16 @@ def add_supported_cxxflags(self, cxxflags):
     supportedFlags = []
     for flags in cxxflags:
         flags = Utils.to_list(flags)
-        if self.check_cxx(cxxflags=['-Werror'] + flags, mandatory=False):
+        flags_werror = (['-Werror'] if not msvc else [])
+        if self.check_cxx(cxxflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 
     self.end_msg(' '.join(supportedFlags))
     self.env.prepend_value('CXXFLAGS', supportedFlags)
+    self.env.prepend_value('CL', supportedFlags)
 
 @Configure.conf
-def add_supported_linkflags(self, linkflags):
+def add_supported_linkflags(self, linkflags, msvc=False):
     """
     Check which linkflags are supported by compiler and add them to env.LINKFLAGS variable
     """
@@ -106,7 +111,8 @@ def add_supported_linkflags(self, linkflags):
     supportedFlags = []
     for flags in linkflags:
         flags = Utils.to_list(flags)
-        if self.check_cxx(linkflags=['-Werror'] + flags, mandatory=False):
+        flags_werror = (['-Werror'] if not msvc else [])
+        if self.check_cxx(linkflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 
     self.end_msg(' '.join(supportedFlags))
@@ -224,4 +230,25 @@ class ClangFlags(GccBasicFlags):
                               ]
         if self.getCompilerVersion(conf) < (6, 0, 0):
             flags['CXXFLAGS'] += ['-Wno-missing-braces'] # Bug #4721
+        return flags
+
+class MsvcFlags(CompilerFlags):
+    """
+    This class defines flags for msvc
+    """
+    def getGeneralFlags(self, conf):
+        flags = super(MsvcFlags, self).getGeneralFlags(conf)
+        flags['CXXFLAGS'] += ['/std:c++14',
+                              '/Zc:__cplusplus',
+                              '/EHsc',
+                              '/MD',
+                              '/D_WIN32_WINNT=0x0601']
+        return flags
+
+    def getDebugFlags(self, conf):
+        flags = super(MsvcFlags, self).getDebugFlags(conf)
+        return flags
+
+    def getOptimizedFlags(self, conf):
+        flags = super(MsvcFlags, self).getOptimizedFlags(conf)
         return flags

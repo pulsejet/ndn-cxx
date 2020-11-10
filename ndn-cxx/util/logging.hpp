@@ -32,6 +32,10 @@
 #include <mutex>
 #include <unordered_map>
 
+#ifdef _MSC_VER
+#include <set>
+#endif
+
 namespace ndn {
 namespace util {
 

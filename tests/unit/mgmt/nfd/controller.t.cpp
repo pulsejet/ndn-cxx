@@ -26,6 +26,9 @@
 #include "tests/make-interest-data.hpp"
 #include "tests/unit/mgmt/nfd/controller-fixture.hpp"
 
+#undef ERROR
+#undef ERROR_TIMEOUT
+
 namespace ndn {
 namespace nfd {
 namespace tests {
