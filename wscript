@@ -105,7 +105,7 @@ def configure(conf):
     conf.check_sqlite3()
     conf.check_openssl(lib='crypto', atleast_version=0x1000200f) # 1.0.2
 
-    boost_libs = ['system', 'program_options', 'chrono', 'date_time', 'filesystem', 'thread', 'log-mt']
+    boost_libs = ['system', 'program_options', 'chrono', 'date_time', 'filesystem', 'thread', 'log']
 
     stacktrace_backend = conf.options.with_stacktrace
     if stacktrace_backend is None:
