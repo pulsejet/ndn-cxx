@@ -29,20 +29,20 @@
 #include <windows.h>
 
 bool win_sleep(){
-	HANDLE timer;
-	LARGE_INTEGER li;
-	if(!(timer = CreateWaitableTimer(NULL, true, NULL)))
-		return false;
+  HANDLE timer;
+  LARGE_INTEGER li;
+  if(!(timer = CreateWaitableTimer(NULL, true, NULL)))
+    return false;
 
-	li.QuadPart = -1000;
-	if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, false)){
-		CloseHandle(timer);
-		return false;
-	}
+  li.QuadPart = -1000;
+  if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, false)){
+    CloseHandle(timer);
+    return false;
+  }
 
-	WaitForSingleObject(timer, INFINITE);
-	CloseHandle(timer);
-	return true;
+  WaitForSingleObject(timer, INFINITE);
+  CloseHandle(timer);
+  return true;
 }
 #endif
 
