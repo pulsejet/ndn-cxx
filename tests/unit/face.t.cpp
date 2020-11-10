@@ -23,7 +23,7 @@
 #include "ndn-cxx/lp/tags.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 #include "ndn-cxx/transport/unix-transport.hpp"
 #endif
 
@@ -843,7 +843,7 @@ BOOST_AUTO_TEST_CASE(ProcessEvents)
   BOOST_CHECK_EQUAL(nRegSuccesses, 1);
 }
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 BOOST_AUTO_TEST_CASE(DestroyWithoutProcessEvents) // Bug 3248
 {
   auto face2 = make_unique<Face>(io);
@@ -854,7 +854,7 @@ BOOST_AUTO_TEST_CASE(DestroyWithoutProcessEvents) // Bug 3248
   // avoid "test case [...] did not check any assertions" message from Boost.Test
   BOOST_CHECK(true);
 }
-#endif // ifndef __MINGW32__
+#endif // ifndef _WIN32
 
 BOOST_AUTO_TEST_SUITE(Transport)
 
@@ -865,7 +865,7 @@ struct PibDirWithDefaultTpm
   const std::string PATH = "build/keys-with-default-tpm";
 };
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 BOOST_FIXTURE_TEST_CASE(FaceTransport, IdentityManagementTimeFixture)
 {
   BOOST_CHECK(Face().getTransport() != nullptr);
@@ -879,7 +879,7 @@ BOOST_FIXTURE_TEST_CASE(FaceTransport, IdentityManagementTimeFixture)
   BOOST_CHECK(Face(transport, io).getTransport() == transport);
   BOOST_CHECK(Face(transport, io, m_keyChain).getTransport() == transport);
 }
-#endif // ifndef __MINGW32__
+#endif // ifndef _WIN32
 
 class WithEnv : private IdentityManagementTimeFixture
 {
@@ -928,7 +928,7 @@ class WithEnvAndConfig : public WithEnv, public WithConfig
 
 typedef boost::mpl::vector<WithEnv, WithConfig> ConfigOptions;
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 BOOST_FIXTURE_TEST_CASE(NoConfig, WithEnvAndConfig) // fixture configures test HOME and PIB/TPM path
 {
   shared_ptr<Face> face;

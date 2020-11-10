@@ -25,7 +25,7 @@
 #include "ndn-cxx/face.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 #include "ndn-cxx/transport/unix-transport.hpp"
 #endif
 
@@ -121,7 +121,7 @@ protected:
   Scheduler sched;
 };
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 using Transports = boost::mpl::vector<UnixTransport, TcpTransport>;
 #else
 using Transports = boost::mpl::vector<TcpTransport>;
@@ -335,7 +335,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE(OversizedData, TransportType, Transports, FaceF
 
 BOOST_AUTO_TEST_SUITE_END() // Producer
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<UnixTransport>)
 #else
 BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<TcpTransport>)

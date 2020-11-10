@@ -26,7 +26,7 @@
 #include "ndn-cxx/util/logger.hpp"
 #include "ndn-cxx/util/string-helper.hpp"
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 #include <net/if.h>
 #endif
 
@@ -178,13 +178,13 @@ operator<<(std::ostream& os, const NetworkInterface& netif)
 #define PRINT_IFF(flag) printFlag(os, flags, IFF_##flag, #flag)
   PRINT_IFF(UP);
   PRINT_IFF(BROADCAST);
-#ifndef __MINGW32__
+#ifndef _WIN32
   PRINT_IFF(DEBUG);
 #endif
 
   PRINT_IFF(LOOPBACK);
 
-#ifndef __MINGW32__
+#ifndef _WIN32
   PRINT_IFF(POINTOPOINT);
 #else
   PRINT_IFF(POINTTOPOINT);
@@ -194,7 +194,7 @@ operator<<(std::ostream& os, const NetworkInterface& netif)
   PRINT_IFF(NOTRAILERS);
 #endif
 
-#ifndef __MINGW32__
+#ifndef _WIN32
   PRINT_IFF(RUNNING);
   PRINT_IFF(NOARP);
   PRINT_IFF(PROMISC);

@@ -22,7 +22,7 @@
 #define BOOST_TEST_MODULE ndn-cxx
 #include "tests/boost-test.hpp"
 
-#ifdef __MINGW32__
+#ifdef _WIN32
 #include <windows.h>
 
 // Speed up tests by reducing the mininum sleep time to 1ms

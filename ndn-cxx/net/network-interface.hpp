@@ -171,7 +171,7 @@ public: // getters
   bool
   isPointToPoint() const
   {
-#ifndef __MINGW32__
+#ifndef _WIN32
     return (m_flags & IFF_POINTOPOINT) != 0;
 #else
     return (m_flags & IFF_POINTTOPOINT) != 0;

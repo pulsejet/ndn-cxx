@@ -31,7 +31,7 @@
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
 
-#ifdef __MINGW32__
+#ifdef _WIN32
 #define setenv(A, B, C) _putenv_s(A, B)
 #define unsetenv(A) _putenv_s(A, "")
 #endif

@@ -33,7 +33,7 @@
 #include "ndn-cxx/mgmt/nfd/controller.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 #include "ndn-cxx/transport/unix-transport.hpp"
 #endif
 

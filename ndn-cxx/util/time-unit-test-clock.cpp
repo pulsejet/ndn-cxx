@@ -25,7 +25,7 @@
 #include <chrono>
 #include <thread>
 
-#ifdef __MINGW32__
+#ifdef _WIN32
 #include <windows.h>
 
 bool win_sleep(){
@@ -96,7 +96,7 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
                                 boost::asio::wait_traits<steady_clock>::to_wait_duration(duration) +
                                 typename BaseClock::duration(1)).count()));
 
-#ifdef __MINGW32__
+#ifdef _WIN32
   win_sleep();
 #endif
 }
@@ -115,7 +115,7 @@ UnitTestClock<BaseClock, ClockTraits>::setNow(nanoseconds timeSinceEpoch)
                                 boost::asio::wait_traits<steady_clock>::to_wait_duration(delta) +
                                 typename BaseClock::duration(1)).count()));
 
-#ifdef __MINGW32__
+#ifdef _WIN32
   win_sleep();
 #endif
 }

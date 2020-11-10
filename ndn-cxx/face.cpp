@@ -114,7 +114,7 @@ Face::makeDefaultTransport()
 
   if (transportUri.empty()) {
     // transport not specified, use default Unix transport.
-#ifndef __MINGW32__
+#ifndef _WIN32
     return UnixTransport::create("");
 #else
     NDN_THROW(ConfigFile::Error("Failed to create transport without URI - no unix socket support"));
@@ -127,7 +127,7 @@ Face::makeDefaultTransport()
     protocol = uri.getScheme();
 
     if (protocol == "unix") {
-#ifndef __MINGW32__
+#ifndef _WIN32
       return UnixTransport::create(transportUri);
 #else
       NDN_THROW(ConfigFile::Error("Failed to create transport - no unix socket support"));

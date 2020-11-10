@@ -19,7 +19,7 @@
  * See AUTHORS.md for complete list of ndn-cxx authors and contributors.
  */
 
-#ifndef __MINGW32__
+#ifndef _WIN32
 
 #include "ndn-cxx/transport/unix-transport.hpp"
 

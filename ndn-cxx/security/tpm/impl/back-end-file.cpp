@@ -219,7 +219,7 @@ BackEndFile::saveKey(const Name& keyName, const PrivateKey& key)
   key.savePkcs1Base64(os);
 
   // set file permission
-#ifndef __MINGW32__
+#ifndef _WIN32
   ::chmod(fileName.data(), 0000400);
 #endif
 }
