@@ -16,7 +16,7 @@ if has CentOS-8 $NODE_LABELS; then
     PCH="--without-pch"
 fi
 
-if has Windows $NODE_LABELS; then
+if has MSYS $NODE_LABELS; then
     alias waf="/bin/python ./waf"
 else
     alias waf="./waf"

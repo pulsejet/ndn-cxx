@@ -22,7 +22,7 @@ jobs:
           install: git python mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-boost mingw-w64-x86_64-sqlite3 mingw-w64-x86_64-openssl
       - name: CI-Build
         run: |
-          export NODE_LABELS="Windows Windows Windows"
+          export NODE_LABELS="Windows MSYS Windows"
           export WAF_JOBS=4
           export JOB_NAME="limited-build"
           export DISABLE_HEADERS_CHECK=1
