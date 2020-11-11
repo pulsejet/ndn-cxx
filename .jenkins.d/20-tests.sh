@@ -8,6 +8,11 @@ if has OSX $NODE_LABELS; then
     security unlock-keychain -p named-data
 fi
 
+if has Windows $NODE_LABELS; then
+    alias ndnsec-keygen="./build/bin/ndnsec-keygen"
+    alias ndnsec-install-cert="./build/bin/ndnsec-install-cert"
+fi
+
 ndnsec-keygen "/tmp/jenkins/$NODE_NAME" | ndnsec-install-cert -
 
 # https://github.com/google/sanitizers/wiki/AddressSanitizerFlags
