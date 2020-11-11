@@ -49,10 +49,14 @@ def configure(conf):
     conf.areCustomCxxflagsPresent = (len(conf.env.CXXFLAGS) > 0)
 
     # General flags are always applied (e.g., selecting C++ language standard)
-    is_msvc = (cxx == 'msvc')
     generalFlags = conf.flags.getGeneralFlags(conf)
-    conf.add_supported_cxxflags(generalFlags['CXXFLAGS'], msvc=is_msvc)
-    conf.add_supported_linkflags(generalFlags['LINKFLAGS'], msvc=is_msvc)
+
+    # MSYS compilers don't detect NDN_CXX_UNREACHABLE correctly
+    if Utils.unversioned_sys_platform() == 'msys':
+        generalFlags['CXXFLAGS'] += ['-Wno-return-type']
+
+    conf.add_supported_cxxflags(generalFlags['CXXFLAGS'])
+    conf.add_supported_linkflags(generalFlags['LINKFLAGS'])
     conf.env.DEFINES += generalFlags['DEFINES']
 
 @Configure.conf
@@ -78,7 +82,7 @@ def check_compiler_flags(conf):
     conf.env.DEFINES += extraFlags['DEFINES']
 
 @Configure.conf
-def add_supported_cxxflags(self, cxxflags, msvc=False):
+def add_supported_cxxflags(self, cxxflags):
     """
     Check which cxxflags are supported by compiler and add them to env.CXXFLAGS variable
     """
@@ -90,7 +94,7 @@ def add_supported_cxxflags(self, cxxflags, msvc=False):
     supportedFlags = []
     for flags in cxxflags:
         flags = Utils.to_list(flags)
-        flags_werror = (['-Werror'] if not msvc else [])
+        flags_werror = (['-Werror'] if not self.env.CXX_NAME == 'msvc' else [])
         if self.check_cxx(cxxflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 
@@ -99,7 +103,7 @@ def add_supported_cxxflags(self, cxxflags, msvc=False):
     self.env.prepend_value('CL', supportedFlags)
 
 @Configure.conf
-def add_supported_linkflags(self, linkflags, msvc=False):
+def add_supported_linkflags(self, linkflags):
     """
     Check which linkflags are supported by compiler and add them to env.LINKFLAGS variable
     """
@@ -111,7 +115,7 @@ def add_supported_linkflags(self, linkflags, msvc=False):
     supportedFlags = []
     for flags in linkflags:
         flags = Utils.to_list(flags)
-        flags_werror = (['-Werror'] if not msvc else [])
+        flags_werror = (['-Werror'] if not self.env.CXX_NAME == 'msvc' else [])
         if self.check_cxx(linkflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -ex
+shopt -s expand_aliases
 
 git submodule sync
 git submodule update --init
@@ -15,7 +16,9 @@ if has CentOS-8 $NODE_LABELS; then
     PCH="--without-pch"
 fi
 
-if ! alias waf 2>/dev/null; then
+if has Windows $NODE_LABELS; then
+    alias waf="/bin/python ./waf"
+else
     alias waf="./waf"
 fi
 

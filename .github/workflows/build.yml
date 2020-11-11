@@ -26,5 +26,6 @@ jobs:
           export WAF_JOBS=4
           export JOB_NAME="limited-build"
           export DISABLE_HEADERS_CHECK=1
-          alias waf="/bin/python ./waf"
+          export LDFLAGS="-lws2_32 -lwinmm"
+          export DISABLE_ASAN=1
           ./.jenkins
