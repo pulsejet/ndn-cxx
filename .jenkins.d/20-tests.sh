@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -ex
+shopt -s expand_aliases
 
 # Prepare environment
 rm -rf ~/.ndn

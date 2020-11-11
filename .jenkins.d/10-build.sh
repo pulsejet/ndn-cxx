@@ -49,6 +49,11 @@ if ! has Windows $NODE_LABELS; then
     sudo_preserve_env PATH -- waf --color=yes install
 fi
 
+# Copy library to ndnsec for MSYS
+if has MSYS $NODE_LABELS; then
+    cp build/ndn-cxx-0.dll build/bin/
+fi
+
 if has CentOS-8 $NODE_LABELS; then
     sudo tee /etc/ld.so.conf.d/ndn.conf >/dev/null <<< /usr/local/lib64
 fi
