@@ -274,7 +274,15 @@ boost::shared_ptr<boost::log::sinks::sink>
 Logging::makeDefaultStreamDestination(shared_ptr<std::ostream> os, bool wantAutoFlush)
 {
   auto backend = boost::make_shared<TextOstreamBackend>(std::move(os), wantAutoFlush);
-  auto destination = boost::make_shared<boost::log::sinks::asynchronous_sink<TextOstreamBackend>>(backend);
+
+  // Windows deadlocks with asynchronous sink
+#ifdef _WIN32
+#define SINK_T boost::log::sinks::synchronous_sink
+#else
+#define SINK_T boost::log::sinks::asynchronous_sink
+#endif
+  auto destination = boost::make_shared<SINK_T<TextOstreamBackend>>(backend);
+#undef SINK_T
 
   namespace expr = boost::log::expressions;
   destination->set_formatter(expr::stream
