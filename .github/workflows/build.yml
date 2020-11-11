@@ -25,4 +25,6 @@ jobs:
           export NODE_LABELS="Windows Windows Windows"
           export WAF_JOBS=4
           export JOB_NAME="limited-build"
-          ./jenkins
+          alias python=/bin/python
+          alias python3=/bin/python
+          ./.jenkins
