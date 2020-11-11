@@ -1,0 +1,28 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git python mingw-w64-x86_64-toolchain mingw-w64-x86_64-gcc mingw-w64-x86_64-boost mingw-w64-x86_64-sqlite3 mingw-w64-x86_64-openssl
+      - name: CI-Build
+        run: |
+          export NODE_LABELS="Windows Windows Windows"
+          export WAF_JOBS=4
+          export JOB_NAME="limited-build"
+          ./jenkins
