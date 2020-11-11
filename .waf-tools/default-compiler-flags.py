@@ -94,7 +94,7 @@ def add_supported_cxxflags(self, cxxflags):
     supportedFlags = []
     for flags in cxxflags:
         flags = Utils.to_list(flags)
-        flags_werror = (['-Werror'] if not self.env.CXX_NAME == 'msvc' else [])
+        flags_werror = (['-Werror'] if self.env.CXX_NAME != 'msvc' else [])
         if self.check_cxx(cxxflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 
@@ -115,7 +115,7 @@ def add_supported_linkflags(self, linkflags):
     supportedFlags = []
     for flags in linkflags:
         flags = Utils.to_list(flags)
-        flags_werror = (['-Werror'] if not self.env.CXX_NAME == 'msvc' else [])
+        flags_werror = (['-Werror'] if self.env.CXX_NAME != 'msvc' else [])
         if self.check_cxx(linkflags=flags_werror + flags, mandatory=False):
             supportedFlags += flags
 
