@@ -86,7 +86,7 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
   // called in main(), so need tests run very slowly if that duration
   // is increased to 1ms
   //
-  Sleep(1);
+  Sleep(3);
 #endif
 }
 
@@ -105,7 +105,7 @@ UnitTestClock<BaseClock, ClockTraits>::setNow(nanoseconds timeSinceEpoch)
                                 typename BaseClock::duration(1)).count()));
 
 #ifdef _WIN32
-  Sleep(1);
+  Sleep(3);
 #endif
 }
 
