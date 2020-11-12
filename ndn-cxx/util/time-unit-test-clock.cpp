@@ -82,9 +82,9 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
 #ifdef _WIN32
   // Windows does not have nanosleep, so the previous call is ignored
   //
-  // For some reason sleep_for is not affected by timeBeginPeriod
-  // called in main(), so need tests run very slowly if that duration
-  // is increased to 1ms
+  // For some reason std::this_thread::sleep_for is not affected by
+  // timeBeginPeriod called in main(), so tests run very slowly if that
+  // duration is increased instead of a direct Sleep call
   //
   Sleep(3);
 #endif

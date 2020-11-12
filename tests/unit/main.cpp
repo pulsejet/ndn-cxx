@@ -30,9 +30,9 @@ struct InitializeFixture {
   InitializeFixture()   {
       timeBeginPeriod(1);
 
-      // This initial sleep call gives the scheduler time to switch to a higher.
-      // Without this call, 1ms Sleep calls called too early get ignored
-      // intermittently, causing tests to fail unpredictably
+      // This initial sleep call gives the scheduler time to switch resolution.
+      // Without this call, short Sleep calls called too early get ignored
+      // intermittently, causing tests to fail unpredictably.
       Sleep(1000);
   }
   ~InitializeFixture()  {
