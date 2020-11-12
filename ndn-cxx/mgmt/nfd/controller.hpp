@@ -32,8 +32,10 @@
 #include "ndn-cxx/security/validator.hpp"
 #include "ndn-cxx/util/segment-fetcher.hpp"
 
+#ifdef _WIN32
 #undef ERROR
 #undef ERROR_TIMEOUT
+#endif
 
 namespace ndn {
 

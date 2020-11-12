@@ -26,8 +26,10 @@
 #include "tests/make-interest-data.hpp"
 #include "tests/unit/mgmt/nfd/controller-fixture.hpp"
 
+#ifdef _WIN32
 #undef ERROR
 #undef ERROR_TIMEOUT
+#endif
 
 namespace ndn {
 namespace nfd {

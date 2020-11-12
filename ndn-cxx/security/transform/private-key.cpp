@@ -35,8 +35,10 @@
 #include <boost/lexical_cast.hpp>
 #include <cstring>
 
+#ifdef _WIN32
 #undef ERROR
 #undef ERROR_TIMEOUT
+#endif
 
 #define ENSURE_PRIVATE_KEY_LOADED(key) \
   do { \

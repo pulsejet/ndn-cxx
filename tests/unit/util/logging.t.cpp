@@ -31,7 +31,9 @@
 #include <boost/test/output_test_stream.hpp>
 #endif
 
+#ifdef _WIN32
 #undef ERROR
+#endif
 
 namespace ndn {
 namespace util {

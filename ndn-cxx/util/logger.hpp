@@ -34,7 +34,9 @@
 
 #include <atomic>
 
+#ifdef _WIN32
 #undef ERROR
+#endif
 
 namespace ndn {
 namespace util {

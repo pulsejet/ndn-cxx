@@ -24,7 +24,9 @@
 
 #include "ndn-cxx/detail/common.hpp"
 
+#ifdef _WIN32
 #undef NO_ERROR
+#endif
 
 namespace ndn {
 namespace security {

@@ -27,7 +27,9 @@
 #include "ndn-cxx/encoding/block-helpers.hpp"
 #include "ndn-cxx/util/time.hpp"
 
+#ifdef _WIN32
 #undef ALTERNATE
+#endif
 
 namespace ndn {
 namespace name {
