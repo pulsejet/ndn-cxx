@@ -22,9 +22,12 @@
 #include "ndn-cxx/util/time-unit-test-clock.hpp"
 #include "ndn-cxx/util/impl/steady-timer.hpp"
 
-#include <boost/asio.hpp>
 #include <chrono>
 #include <thread>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 namespace ndn {
 namespace time {
@@ -67,20 +70,24 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
   // at the clock again until the earliest timer has expired, so it won't know that
   // the current time has changed.
   //
-  // Therefore, in order for the clock advancement to be effective, we must wait
+  // Therefore, in order for the clock advancement to be effective, we must sleep
   // for a period greater than wait_traits::to_wait_duration().
   //
   // See also http://blog.think-async.com/2007/08/time-travel.html - "Jumping Through Time"
   //
-  // It is a better idea to wait using a high_resolution_timer instead of sleep,
-  // to prevent returning to the scheduler. This prevents intermittent failures on Win32
+  std::this_thread::sleep_for(std::chrono::nanoseconds(duration_cast<nanoseconds>(
+                                boost::asio::wait_traits<steady_clock>::to_wait_duration(duration) +
+                                typename BaseClock::duration(1)).count()));
+
+#ifdef _WIN32
+  // Windows does not have nanosleep, so the previous call is ignored
   //
-  boost::asio::io_service io;
-  boost::asio::steady_timer timer(io);
-  timer.expires_from_now(std::chrono::nanoseconds(duration_cast<nanoseconds>(
-                         boost::asio::wait_traits<steady_clock>::to_wait_duration(duration) +
-                         typename BaseClock::duration(1)).count()));
-  timer.wait();
+  // For some reason sleep_for is not affected by timeBeginPeriod
+  // called in main(), so need tests run very slowly if that duration
+  // is increased to 1ms
+  //
+  Sleep(3);
+#endif
 }
 
 template<class BaseClock, class ClockTraits>
@@ -93,12 +100,13 @@ UnitTestClock<BaseClock, ClockTraits>::setNow(nanoseconds timeSinceEpoch)
 
   // See comment in advance()
   auto delta = timeSinceEpoch - m_currentTime;
-  boost::asio::io_service io;
-  boost::asio::steady_timer timer(io);
-  timer.expires_from_now(std::chrono::nanoseconds(duration_cast<nanoseconds>(
-                         boost::asio::wait_traits<steady_clock>::to_wait_duration(delta) +
-                         typename BaseClock::duration(1)).count()));
-  timer.wait();
+  std::this_thread::sleep_for(std::chrono::nanoseconds(duration_cast<nanoseconds>(
+                                boost::asio::wait_traits<steady_clock>::to_wait_duration(delta) +
+                                typename BaseClock::duration(1)).count()));
+
+#ifdef _WIN32
+  Sleep(3);
+#endif
 }
 
 template

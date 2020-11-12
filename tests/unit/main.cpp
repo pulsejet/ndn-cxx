@@ -25,13 +25,13 @@
 #ifdef _WIN32
 #include <windows.h>
 
-// Speed up tests by reducing the minimum sleep time to 1ms
+// Speed up tests by reducing the mininum sleep time to 1ms
 struct InitializeFixture {
   InitializeFixture()   {
       timeBeginPeriod(1);
 
       // This initial sleep call gives the scheduler time to switch to a higher.
-      // Without this call, timers set too early are immediately executed
+      // Without this call, 1ms Sleep calls called too early get ignored
       // intermittently, causing tests to fail unpredictably
       Sleep(1000);
   }
