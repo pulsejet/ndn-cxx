@@ -27,23 +27,6 @@
 
 #ifdef _WIN32
 #include <windows.h>
-
-bool win_sleep(){
-  HANDLE timer;
-  LARGE_INTEGER li;
-  if(!(timer = CreateWaitableTimer(NULL, true, NULL)))
-    return false;
-
-  li.QuadPart = -10000;
-  if(!SetWaitableTimer(timer, &li, 0, NULL, NULL, false)){
-    CloseHandle(timer);
-    return false;
-  }
-
-  WaitForSingleObject(timer, INFINITE);
-  CloseHandle(timer);
-  return true;
-}
 #endif
 
 namespace ndn {
@@ -97,7 +80,13 @@ UnitTestClock<BaseClock, ClockTraits>::advance(nanoseconds duration)
                                 typename BaseClock::duration(1)).count()));
 
 #ifdef _WIN32
-  win_sleep();
+  // Windows does not have nanosleep, so the previous call is ignored
+  //
+  // For some reason sleep_for is not affected by timeBeginPeriod
+  // called in main(), so need tests run very slowly if that duration
+  // is increased to 1ms
+  //
+  Sleep(1);
 #endif
 }
 
@@ -116,7 +105,7 @@ UnitTestClock<BaseClock, ClockTraits>::setNow(nanoseconds timeSinceEpoch)
                                 typename BaseClock::duration(1)).count()));
 
 #ifdef _WIN32
-  win_sleep();
+  Sleep(1);
 #endif
 }
 

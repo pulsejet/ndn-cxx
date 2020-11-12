@@ -29,6 +29,11 @@
 struct InitializeFixture {
   InitializeFixture()   {
       timeBeginPeriod(1);
+
+      // This initial sleep call gives the scheduler time to switch to a higher.
+      // Without this call, 1ms Sleep calls called too early get ignored
+      // intermittently, causing tests to fail unpredictably
+      Sleep(1000);
   }
   ~InitializeFixture()  {
       timeEndPeriod(1);
@@ -36,4 +41,4 @@ struct InitializeFixture {
 };
 
 BOOST_TEST_GLOBAL_FIXTURE(InitializeFixture);
-#endif
+#endif // ifdef _WIN32
