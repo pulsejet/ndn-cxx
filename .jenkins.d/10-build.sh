@@ -46,7 +46,7 @@ waf --color=yes build -j$WAF_JOBS
 
 # Install
 if ! has Windows $NODE_LABELS; then
-    sudo_preserve_env PATH -- waf --color=yes install
+    sudo_preserve_env PATH -- ./waf --color=yes install
 fi
 
 # Copy library to ndnsec for MSYS

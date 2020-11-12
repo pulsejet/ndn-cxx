@@ -55,7 +55,7 @@ public:
     delete pib;
   }
 public:
-  PibMemory * pib;
+  PibMemory* pib;
 };
 
 class PibSqlite3Fixture : public PibDataFixture
@@ -75,7 +75,7 @@ public:
 
 public:
   boost::filesystem::path tmpPath;
-  PibSqlite3 * pib;
+  PibSqlite3* pib;
 };
 
 using PibImpls = boost::mpl::vector<PibMemoryFixture, PibSqlite3Fixture>;
