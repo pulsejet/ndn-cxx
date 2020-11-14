@@ -48,14 +48,14 @@ class PibMemoryFixture : public PibDataFixture
 public:
   PibMemoryFixture()
   {
-    pib = new PibMemory();
+    pib = std::make_unique<PibMemory>();
   }
   ~PibMemoryFixture()
   {
-    delete pib;
+    pib.reset();
   }
 public:
-  PibMemory* pib;
+  std::unique_ptr<PibMemory> pib;
 };
 
 class PibSqlite3Fixture : public PibDataFixture
@@ -64,18 +64,18 @@ public:
   PibSqlite3Fixture()
     : tmpPath(boost::filesystem::path(UNIT_TEST_CONFIG_PATH) / "DbTest")
   {
-    pib = new PibSqlite3(tmpPath.string());
+    pib = std::make_unique<PibSqlite3>(tmpPath.string());
   }
 
   ~PibSqlite3Fixture()
   {
-    delete pib;
+    pib.reset();
     boost::filesystem::remove_all(tmpPath);
   }
 
 public:
   boost::filesystem::path tmpPath;
-  PibSqlite3* pib;
+  std::unique_ptr<PibSqlite3> pib;
 };
 
 using PibImpls = boost::mpl::vector<PibMemoryFixture, PibSqlite3Fixture>;

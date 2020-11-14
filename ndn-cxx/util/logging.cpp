@@ -277,11 +277,11 @@ Logging::makeDefaultStreamDestination(shared_ptr<std::ostream> os, bool wantAuto
 
   // Windows deadlocks with asynchronous sink
 #ifdef _WIN32
-#define SINK_T boost::log::sinks::synchronous_sink
+using SinkT = boost::log::sinks::synchronous_sink<TextOstreamBackend>;
 #else
-#define SINK_T boost::log::sinks::asynchronous_sink
+using SinkT = boost::log::sinks::asynchronous_sink<TextOstreamBackend>;
 #endif
-  auto destination = boost::make_shared<SINK_T<TextOstreamBackend>>(backend);
+  auto destination = boost::make_shared<SinkT>(backend);
 #undef SINK_T
 
   namespace expr = boost::log::expressions;

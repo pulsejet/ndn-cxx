@@ -130,11 +130,11 @@ protected:
   Scheduler sched;
 };
 
+using Transports = boost::mpl::vector<
 #ifndef _WIN32
-using Transports = boost::mpl::vector<UnixTransport, TcpTransport>;
-#else
-using Transports = boost::mpl::vector<TcpTransport>;
+                        UnixTransport,
 #endif
+                        TcpTransport>;
 
 BOOST_AUTO_TEST_SUITE(Consumer)
 

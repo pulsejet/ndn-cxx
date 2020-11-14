@@ -23,11 +23,6 @@
 
 #include <boost/endian/conversion.hpp>
 
-#ifdef _WIN32
-#undef ERROR
-#undef ERROR_TIMEOUT
-#endif
-
 namespace ndn {
 namespace encoding {
 

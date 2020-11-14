@@ -74,6 +74,6 @@ class DummyExtraArg
 /** \brief (implementation detail)
  */
 #define emitSignal(...) \
-  EXPAND_VA_ARGS( NDN_CXX_SIGNAL_EMIT(__VA_ARGS__, ::ndn::util::signal::DummyExtraArg()) )
+  EXPAND_VA_ARGS(NDN_CXX_SIGNAL_EMIT(__VA_ARGS__, ::ndn::util::signal::DummyExtraArg()))
 
 #endif // NDN_UTIL_SIGNAL_EMIT_HPP

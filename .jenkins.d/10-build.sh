@@ -51,7 +51,7 @@ fi
 
 # Copy library to ndnsec for MSYS
 if has MSYS $NODE_LABELS; then
-    cp build/ndn-cxx-0.dll build/bin/
+    cp build/ndn-cxx-*.dll build/bin/
 fi
 
 if has CentOS-8 $NODE_LABELS; then

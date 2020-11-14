@@ -221,6 +221,8 @@ BackEndFile::saveKey(const Name& keyName, const PrivateKey& key)
   // set file permission
 #ifndef _WIN32
   ::chmod(fileName.data(), 0000400);
+#else
+  // TODO: set access control on Windows
 #endif
 }
 
