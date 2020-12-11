@@ -122,7 +122,7 @@ protected:
 };
 
 using Transports = boost::mpl::vector<
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
                         UnixTransport,
 #endif
                         TcpTransport>;
@@ -335,7 +335,7 @@ BOOST_FIXTURE_TEST_CASE_TEMPLATE(OversizedData, TransportType, Transports, FaceF
 
 BOOST_AUTO_TEST_SUITE_END() // Producer
 
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
 BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<UnixTransport>)
 #else
 BOOST_FIXTURE_TEST_SUITE(IoRoutine, FaceFixture<TcpTransport>)

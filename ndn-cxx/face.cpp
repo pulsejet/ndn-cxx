@@ -114,11 +114,11 @@ Face::makeDefaultTransport()
 
   if (transportUri.empty()) {
     // transport not specified, use default Unix transport.
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
     return UnixTransport::create("");
 #else
     NDN_THROW(ConfigFile::Error("Failed to create transport without URI - no unix socket support"));
-#endif
+#endif // BOOST_ASIO_HAS_LOCAL_SOCKETS
   }
 
   std::string protocol;
@@ -127,11 +127,11 @@ Face::makeDefaultTransport()
     protocol = uri.getScheme();
 
     if (protocol == "unix") {
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
       return UnixTransport::create(transportUri);
 #else
       NDN_THROW(ConfigFile::Error("Failed to create transport - no unix socket support"));
-#endif
+#endif // BOOST_ASIO_HAS_LOCAL_SOCKETS
     }
     else if (protocol == "tcp" || protocol == "tcp4" || protocol == "tcp6") {
       return TcpTransport::create(transportUri);
