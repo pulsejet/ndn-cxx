@@ -25,9 +25,9 @@
 #include "ndn-cxx/face.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
 
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
 #include "ndn-cxx/transport/unix-transport.hpp"
-#endif
+#endif // BOOST_ASIO_HAS_LOCAL_SOCKETS
 
 #include "ndn-cxx/util/scheduler.hpp"
 
@@ -58,21 +58,12 @@ executeCommand(const std::string& cmd)
 {
   std::string output;
   char buf[256];
-  FILE* pipe =
-#ifdef _MSC_VER
-    _popen(cmd.data(), "r");
-#else
-    popen(cmd.data(), "r");
-#endif
+  FILE* pipe = popen(cmd.data(), "r");
   BOOST_REQUIRE_MESSAGE(pipe != nullptr, "popen(" << cmd << ")");
   while (fgets(buf, sizeof(buf), pipe) != nullptr) {
     output += buf;
   }
-#ifdef _MSC_VER
-  _pclose(pipe);
-#else
   pclose(pipe);
-#endif
   return output;
 }
 

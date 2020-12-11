@@ -35,15 +35,6 @@
 #error "ndn-cxx applications must be compiled using the C++14 standard (-std=c++14)"
 #endif
 
-// Extra definitions for MSVC
-#if defined(_MSC_VER)
-#include <BaseTsd.h>
-typedef SSIZE_T ssize_t;
-#endif
-
-// Workaround for MSVC
-#define EXPAND_VA_ARGS( x ) x
-
 // ndn-cxx specific macros declared in this and other headers must have NDN_CXX_ prefix
 // to avoid conflicts with other projects that include ndn-cxx headers.
 #ifdef NDN_CXX_HAVE_TESTS

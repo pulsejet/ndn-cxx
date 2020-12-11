@@ -25,7 +25,12 @@
 #ifdef _WIN32
 #include <windows.h>
 
-// Speed up tests by reducing the mininum sleep time to 1ms
+// Speed up tests by reducing the mininum sleep time to 1ms.
+// By default, Windows has a very coarse scheduling policy, which
+// makes it very slow to run the unit tests. The following call
+// changes the policy to use finer resolution in time.
+// https://docs.microsoft.com/en-us/windows/win32/api/timeapi/nf-timeapi-timebeginperiod
+//
 struct InitializeFixture {
   InitializeFixture()   {
       timeBeginPeriod(1);

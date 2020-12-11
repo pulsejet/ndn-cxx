@@ -80,7 +80,7 @@ def configure(conf):
     conf.env.WITH_TOOLS = conf.options.with_tools
     conf.env.WITH_EXAMPLES = conf.options.with_examples
 
-    conf.find_program('sh', var='SH', mandatory=False)
+    conf.find_program('sh', var='SH')
 
     conf.check_cxx(lib='atomic', uselib_store='ATOMIC', define_name='HAVE_ATOMIC', mandatory=False)
     conf.check_cxx(lib='pthread', uselib_store='PTHREAD', define_name='HAVE_PTHREAD', mandatory=False)
@@ -104,8 +104,7 @@ def configure(conf):
     conf.check_osx_frameworks()
     conf.check_sqlite3()
 
-    crypto_lib = 'crypto' if conf.env.CXX_NAME != 'msvc' else 'libcrypto'
-    conf.check_openssl(lib=crypto_lib, atleast_version=0x1000200f) # 1.0.2
+    conf.check_openssl(lib='crypto', atleast_version=0x1000200f) # 1.0.2
 
     boost_libs = ['system', 'program_options', 'chrono', 'date_time', 'filesystem', 'thread', 'log']
 

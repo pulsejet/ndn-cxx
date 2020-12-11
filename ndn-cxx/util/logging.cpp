@@ -91,8 +91,8 @@ Logging::get()
 Logging::Logging()
 {
   bool wantAutoFlush = true;
-  const char* environm = std::getenv("NDN_LOG_NOFLUSH");
-  if (environm != nullptr) {
+  const char* env = std::getenv("NDN_LOG_NOFLUSH");
+  if (env != nullptr) {
     wantAutoFlush = false;
   }
 
@@ -100,9 +100,9 @@ Logging::Logging()
   auto destination = makeDefaultStreamDestination(shared_ptr<std::ostream>(&std::clog, [] (auto) {}), wantAutoFlush);
   this->setDestinationImpl(std::move(destination));
 
-  environm = std::getenv("NDN_LOG");
-  if (environm != nullptr) {
-    this->setLevelImpl(environm);
+  env = std::getenv("NDN_LOG");
+  if (env != nullptr) {
+    this->setLevelImpl(env);
   }
 
   boost::log::core::get()->add_global_attribute("Timestamp", boost::log::attributes::make_function(&log::makeTimestamp));

@@ -19,7 +19,7 @@
  * See AUTHORS.md for complete list of ndn-cxx authors and contributors.
  */
 
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
 
 #include "ndn-cxx/transport/unix-transport.hpp"
 #include "ndn-cxx/transport/detail/stream-transport-impl.hpp"
@@ -133,4 +133,4 @@ UnixTransport::resume()
 
 } // namespace ndn
 
-#endif
+#endif // BOOST_ASIO_HAS_LOCAL_SOCKETS

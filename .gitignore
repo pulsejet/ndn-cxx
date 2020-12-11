@@ -19,7 +19,6 @@
 /build/
 .waf-*-*/
 .waf3-*-*/
-waf3-*-*/
 .lock-waf*
 
 # Compiled python code

@@ -27,11 +27,7 @@
 #include <cerrno>
 #include <cstring>
 
-#ifdef _MSC_VER
-#include <io.h>
-#else
 #include <unistd.h>
-#endif
 
 namespace ndn {
 namespace ndnsec {

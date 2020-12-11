@@ -33,9 +33,9 @@
 #include "ndn-cxx/mgmt/nfd/controller.hpp"
 #include "ndn-cxx/transport/tcp-transport.hpp"
 
-#ifndef _WIN32
+#ifdef BOOST_ASIO_HAS_LOCAL_SOCKETS
 #include "ndn-cxx/transport/unix-transport.hpp"
-#endif
+#endif // BOOST_ASIO_HAS_LOCAL_SOCKETS
 
 #include "ndn-cxx/util/config-file.hpp"
 #include "ndn-cxx/util/logger.hpp"
