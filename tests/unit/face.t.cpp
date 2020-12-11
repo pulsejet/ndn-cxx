@@ -865,21 +865,21 @@ struct PibDirWithDefaultTpm
   const std::string PATH = "build/keys-with-default-tpm";
 };
 
-#ifndef _WIN32
 BOOST_FIXTURE_TEST_CASE(FaceTransport, IdentityManagementTimeFixture)
 {
+#ifndef _WIN32
   BOOST_CHECK(Face().getTransport() != nullptr);
 
   BOOST_CHECK(Face(shared_ptr<Transport>()).getTransport() != nullptr);
   BOOST_CHECK(Face(shared_ptr<Transport>(), io).getTransport() != nullptr);
   BOOST_CHECK(Face(shared_ptr<Transport>(), io, m_keyChain).getTransport() != nullptr);
+#endif // ifndef _WIN32
 
   auto transport = make_shared<TcpTransport>("localhost", "6363"); // no real io operations will be scheduled
   BOOST_CHECK(Face(transport).getTransport() == transport);
   BOOST_CHECK(Face(transport, io).getTransport() == transport);
   BOOST_CHECK(Face(transport, io, m_keyChain).getTransport() == transport);
 }
-#endif // ifndef _WIN32
 
 class WithEnv : private IdentityManagementTimeFixture
 {
