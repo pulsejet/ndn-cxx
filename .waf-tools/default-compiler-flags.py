@@ -111,7 +111,7 @@ def add_supported_linkflags(self, linkflags):
     supportedFlags = []
     for flags in linkflags:
         flags = Utils.to_list(flags)
-        if self.check_cxx(cxxflags=['-Werror'] + flags, mandatory=False):
+        if self.check_cxx(linkflags=['-Werror'] + flags, mandatory=False):
             supportedFlags += flags
 
     self.end_msg(' '.join(supportedFlags))
